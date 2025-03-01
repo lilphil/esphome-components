@@ -5,7 +5,7 @@ ESPHome components
 </h3>
 
 ## lolin i2c motor
-A thin wrapper around the original loin library
+A thin wrapper around the original lolin library
 
 channel:
   * A
@@ -21,9 +21,8 @@ status:
 
 ```yaml
 external_components:
-  - source:
-      type: local
-      path: components
+  - source: github://lilphil/esphome-components@main
+    components: [ lolin_i2c_motor ]
 
 lolin_i2c_motor:
   id: motor_controller
