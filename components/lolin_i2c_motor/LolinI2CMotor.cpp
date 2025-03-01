@@ -34,7 +34,7 @@ namespace lolini2cmotor {
     ESP_LOGD(TAG, "Set duty cycle: channel=%s, duty=%d", channel, duty);
   }
 
-  void LolinI2CMotor::set_frequency(const std::string &channel, uint16_t frequency) {
+  void LolinI2CMotor::set_freq(const std::string &channel, uint16_t frequency) {
     motor.changeFreq(parse_motor_channel(channel), frequency);
     ESP_LOGD(TAG, "Set frequency: channel=%s, frequency=%d Hz", channel, frequency);
   }
