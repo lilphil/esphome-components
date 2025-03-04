@@ -15,7 +15,7 @@ class LolinI2CMotor : public Component {
 
     void setup() override;
     void set_duty(const std::string &channel, uint8_t duty);
-    void set_frequency(const std::string &channel, uint16_t frequency);
+    void set_freq(const std::string &channel, uint16_t frequency);
     void set_status(const std::string &channel, const std::string &status);
 
   private:
