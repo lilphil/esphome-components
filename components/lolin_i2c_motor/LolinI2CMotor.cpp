@@ -31,17 +31,17 @@ namespace lolini2cmotor {
 
   void LolinI2CMotor::set_duty(const std::string &channel, uint8_t duty) {
     motor.changeDuty(parse_motor_channel(channel), duty);
-    ESP_LOGD(TAG, "Set duty cycle: channel=%s, duty=%d", channel, duty);
+    ESP_LOGD(TAG, "Set duty cycle: channel=%s, duty=%d", channel.c_str(), duty);
   }
 
   void LolinI2CMotor::set_freq(const std::string &channel, uint16_t frequency) {
     motor.changeFreq(parse_motor_channel(channel), frequency);
-    ESP_LOGD(TAG, "Set frequency: channel=%s, frequency=%d Hz", channel, frequency);
+    ESP_LOGD(TAG, "Set frequency: channel=%s, frequency=%d Hz", channel.c_str(), frequency);
   }
 
   void LolinI2CMotor::set_status(const std::string &channel, const std::string &status) {
     motor.changeStatus(parse_motor_channel(channel), parse_motor_status(status));
-    ESP_LOGD(TAG, "Set status: channel=%s, status=%s", channel, status);
+    ESP_LOGD(TAG, "Set status: channel=%s, status=%s", channel.c_str(), status.c_str());
   }
 
   MOTOR_STATUS LolinI2CMotor::parse_motor_status(const std::string &status) {
