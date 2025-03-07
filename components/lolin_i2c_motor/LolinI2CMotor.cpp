@@ -33,15 +33,59 @@ namespace lolini2cmotor {
     motor.changeDuty(parse_motor_channel(channel), duty);
     ESP_LOGD(TAG, "Set duty cycle: channel=%s, duty=%d", channel.c_str(), duty);
   }
-
+  
   void LolinI2CMotor::set_freq(const std::string &channel, uint16_t frequency) {
     motor.changeFreq(parse_motor_channel(channel), frequency);
     ESP_LOGD(TAG, "Set frequency: channel=%s, frequency=%d Hz", channel.c_str(), frequency);
   }
 
   void LolinI2CMotor::set_status(const std::string &channel, const std::string &status) {
-    motor.changeStatus(parse_motor_channel(channel), parse_motor_status(status));
+    MOTOR_CHANNEL parsed_channel = parse_motor_channel(channel);
+    MOTOR_STATUS parsed_status = parse_motor_status(status);
+    if (parsed_channel == MOTOR_CHANNEL::MOTOR_CH_A || parsed_channel == MOTOR_CHANNEL::MOTOR_CH_BOTH) {
+      _status_a = parsed_status;
+    }
+    if (parsed_channel == MOTOR_CHANNEL::MOTOR_CH_B || parsed_channel == MOTOR_CHANNEL::MOTOR_CH_BOTH) {
+      _status_b = parsed_status;
+    }
+    motor.changeStatus(parsed_channel, parsed_status);
     ESP_LOGD(TAG, "Set status: channel=%s, status=%s", channel.c_str(), status.c_str());
+  }
+
+  std::string LolinI2CMotor::get_status(const std::string &channel) {
+    MOTOR_STATUS status;
+    MOTOR_CHANNEL parsed_channel = parse_motor_channel(channel);
+
+    if (parsed_channel == MOTOR_CHANNEL::MOTOR_CH_A) {
+      status = _status_a;
+    }
+    else if (parsed_channel == MOTOR_CHANNEL::MOTOR_CH_B) {
+      status = _status_b;
+    }
+    else {
+      return "UNKNOWN";
+    }
+
+    switch (status) {
+      case MOTOR_STATUS::MOTOR_STATUS_STOP:
+        return "STOP";
+	break;
+      case MOTOR_STATUS::MOTOR_STATUS_CCW:
+        return "CCW";
+	break;
+      case MOTOR_STATUS::MOTOR_STATUS_CW:
+        return "CW";
+	break;
+      case MOTOR_STATUS::MOTOR_STATUS_SHORT_BRAKE:
+        return "SHORT_BRAKE";
+	break;
+      case MOTOR_STATUS::MOTOR_STATUS_STANDBY:
+        return "STANDBY";
+	break;
+      default:
+        return "UNKNOWN";
+	break;
+    }
   }
 
   MOTOR_STATUS LolinI2CMotor::parse_motor_status(const std::string &status) {
