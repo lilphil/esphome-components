@@ -4,9 +4,9 @@
 #include "LOLIN_I2C_MOTOR.h"
 
 namespace esphome {
-namespace lolini2cmotor {
+namespace i2cmotordriver {
 
-class LolinI2CMotor : public Component {
+class I2CMotorDriver : public Component {
   public:
     float get_setup_priority() const override {
       // Setting a custom priority for this component to be initialized after hardware setup
