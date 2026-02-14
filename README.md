@@ -4,28 +4,23 @@
 ESPHome components
 </h3>
 
-## lolin i2c motor
-A thin wrapper around the original lolin library
+## i2c_motor_driver
+Unified I2C motor driver component. Supports **lolin_v2** and **wemos_v1** via config.
 
-channel:
-  * A
-  * B
-  * BOTH
+**driver:** `lolin_v2` | `wemos_v1`
+**channel:** A | B | BOTH
+**status:** STOP | STANDBY | SHORT_BRAKE | CW | CCW
 
-status:
-  * STOP
-  * STANDBY
-  * SHORT_BRAKE
-  * CW
-  * CCW
+Optional: `i2c_address` (default 0x30), `stby_pin` (GPIO for wemos_v1 standby).
 
 ```yaml
 external_components:
   - source: github://lilphil/esphome-components@main
-    components: [ lolin_i2c_motor ]
+    components: [ i2c_motor_driver ]
 
-lolin_i2c_motor:
+i2c_motor_driver:
   id: motor_controller
+  driver: lolin_v2
 
 script:
   - id: cw
